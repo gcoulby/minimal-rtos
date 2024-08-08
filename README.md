@@ -1,11 +1,11 @@
 
 # Minimal RTOS for Raspberry Pi Pico
 
-A simple real-time operating system (RTOS) implementation using a round-robin scheduler designed for the Raspberry Pi Pico. This RTOS manages multiple tasks with adjustable periods and includes basic hardware interaction through GPIO and ADC.
+A simple real-time operating system (RTOS) implementation using either a round-robin or priority-based scheduler designed for the Raspberry Pi Pico. This RTOS manages multiple tasks with adjustable periods and includes basic hardware interaction through GPIO and ADC.
 
 ## Features
 
-- **Round-robin scheduling**: Simple and efficient task scheduling based on fixed time slots.
+- **Flexible Task Scheduling**: Choose between round-robin or priority-based scheduling to manage tasks.
 - **GPIO control**: Toggle LEDs connected to specific GPIO pins.
 - **ADC reading**: Reads analog values from a potentiometer through ADC.
 - **Button interaction**: Triggers ADC reading when a button is pressed.
@@ -54,20 +54,21 @@ Refer to the following schematic to connect LEDs, a button, and a potentiometer 
 
 4. **Restart the Pico** to run the uploaded firmware.
 
-## API
+## Task Manager API
 
-### `createTask`
+### Initialization
 
-```c
-void createTask(TaskFunction_t function, void *params, uint32_t delay, uint32_t period);
-```
+- `TaskManager(SchedulerType schedulerType)`: Initialize the Task Manager with a specified scheduling type (ROUND_ROBIN or PRIORITY_BASED).
 
-- **function**: Pointer to the function that implements the task.
-- **params**: Pointer to the parameters passed to the task function.
-- **delay**: Initial delay in milliseconds before the task starts running.
-- **period**: Time in milliseconds between successive task activations.
+### Task Creation
 
-### Task Functions
+- `void createTask(TaskFunction_t function, void *params, uint32_t delay, uint32_t period, TaskPriority priority)`: Schedule a new task with specific timing and priority.
+
+### Scheduler Start
+
+- `void scheduler()`: Starts the task scheduler, managing the execution of all active tasks.
+
+## Example Tasks
 
 - `toggleYellowLED`: Toggles the yellow LED state.
 - `toggleRedLED`: Toggles the red LED state.
