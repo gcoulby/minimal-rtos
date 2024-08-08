@@ -24,7 +24,7 @@ project(rtos C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-add_executable(rtos rtos.cpp taskManager.cpp )
+add_executable(rtos rtos.cpp taskManager.cpp)
 
 
 pico_set_program_name(rtos "rtos")
